@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        // Load the Visualization API and the piechart package.
+        google.load('visualization', '1', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.setOnLoadCallback(drawChart);
+
+        function draw(jsonData){
+            // Create our data table out of JSON data loaded from server.
+            var data = new google.visualization.DataTable(jsonData);
+            console.log(data);
+            var options = {
+                title : 'Promedio de Servicio Por Ciudad',
+                vAxis: {title: "Cantidad"},
+                hAxis: {title: "Servicios Por Ciudad"},
+                seriesType: "bars",
+                series: {0: {type: "line"}},
+                width: 1200,
+                height: 800
+            };
+
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+
+
+        function drawChart() {
+            var jsonData = $.ajax({
+                url: "http://localhost:4000/api/PromedioCiudad",
+                dataType:"json",
+                data: {"ano": 2015, "mes": 3}
+            }).then(function(data, textStatus){
+//                    console.log(data);
+                    draw(data);
+                }, function(xhr, textStatus){
+                    console.log("ERROR 123");
+                });
+        }
+
+    </script>
+    <title></title>
+</head>
+<body>
+<div id="chart_div"></div>
+</body>
+</html>
