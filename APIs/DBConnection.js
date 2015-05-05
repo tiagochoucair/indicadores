@@ -21,6 +21,8 @@ DBConecction.prototype.defineSqlType = function(type){
             sqlType = sql.Int;
         case 'date':
             sqlType = sql.Date;
+        case 'double':
+            sqlType = sql.Double;
         default:
             sqlType = sql.VarChar;
     }
@@ -40,10 +42,12 @@ DBConecction.prototype.prepare = function(query, params, callback){
     var ps = new sql.PreparedStatement(this.connection);
     var self = this;
     var paramsQuery = {};
-    params.forEach(function(param){
-        ps.input(param.name, self.defineSqlType(param.type));
-        paramsQuery[param.name] = param.value;
-    });
+    if(!!params){
+        params.forEach(function(param){
+            ps.input(param.name, self.defineSqlType(param.type));
+            paramsQuery[param.name] = param.value;
+        });
+    }
     ps.prepare( query , function(err) {
         // ... error checks
         ps.execute(paramsQuery, function(err, recordset) {
@@ -51,7 +55,6 @@ DBConecction.prototype.prepare = function(query, params, callback){
             ps.unprepare(function(err) {
                 // ... error checks
             });
-            console.log(recordset);
             callback(recordset);
         });
     });

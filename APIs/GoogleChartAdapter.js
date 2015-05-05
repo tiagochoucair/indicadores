@@ -8,13 +8,18 @@ var GoogleChartAdapter = function(){
 
 };
 
-var formatValue = function(value, format){
+GoogleChartAdapter.prototype.formatValue = function(value, format){
     var formatedValue;
 
     switch(format){
         case "currency":
             var num = numeral(value);
             numeral.defaultFormat('$0,0.00');
+            formatedValue = num.format();
+            break;
+        case "percentage":
+            var num = numeral(value);
+            numeral.defaultFormat('0.0%');
             formatedValue = num.format();
             break;
         default:
@@ -24,19 +29,32 @@ var formatValue = function(value, format){
     return formatedValue;
 };
 
+GoogleChartAdapter.prototype.getFormatedValue = function(value,format){
+    var formatedValue;
+
+    switch(format) {
+        case "date":
+            formatedValue = new Date(value);
+            break;
+        default:
+            formatedValue = value;
+
+    }
+    return formatedValue;
+}
+
 GoogleChartAdapter.prototype.formatRow = function(cols, row){
     var self = this;
     var formatedRow = {"c":[]};
     cols.forEach(function(col){
-        var value = row[col.label];
-        formatedRow.c.push({"v":value,"f": formatValue(value, col.format)});
-    });
+        var value = this.getFormatedValue(row[col.label], col.format);
+        formatedRow.c.push({"v":value,"f": this.formatValue(value, col.format)});
+    }, this);
     return formatedRow;
 };
 
 GoogleChartAdapter.prototype.formatRows= function(servicio, data) {
     var formatedData = [];
-   console.log(data);
     if (!!data) {
         data.forEach(function (row) {
             formatedData.push(this.formatRow(servicio.cols, row));

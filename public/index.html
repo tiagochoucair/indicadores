@@ -8,53 +8,65 @@
 
     <title></title>
 </head>
-<body data-ano="2015" data-mes="1" data-url="PromedioCiudad">
+<body data-ano="2015" data-mes="1" data-url="PromedioCiudad" data-analista="1">
 <div id="app">
-    <div id="filtroCiudad_div" style="float:left; padding-right: 30px; padding-top: 30px"></div>
-    <div id="filtroServicio_div" style="float:left; padding-right: 30px; padding-top: 30px"></div>
-<div id="dashboard_div" style="border: 5px solid #ccc ; height: 100px;">
-    <select name="anoSelect" id="anoSelect" style="float: right">
-        <option value="2015">2015</option>
-        <option value="2014">2014</option>
-        <option value="2013">2013</option>
-        <option value="2012">2012</option>
-        <option value="2011">2011</option>
-        <option value="2010">2010</option>
-        <option value="2009">2009</option>
-        <option value="2008">2008</option>
-        <option value="2007">2007</option>
-        <option value="2006">2006</option>
-        <option value="2005">2005</option>
-        <option value="2004">2004</option>
-        <option value="2003">2003</option>
-        <option value="2002">2002</option>
-        <option value="2001">2001</option>
-    </select>
-    <select name="mesSelect" id="mesSelect"style="float: right">
-        <option value="1">Enero</option>
-        <option value="2">Febrero</option>
-        <option value="3">Marzo</option>
-        <option value="4">Abril</option>
-        <option value="5">Mayo</option>
-        <option value="6">Junio</option>
-        <option value="7">Julio</option>
-        <option value="8">Agosto</option>
-        <option value="9">Septiembre</option>
-        <option value="10">Octube</option>
-        <option value="11">Noviembre</option>
-        <option value="12">Diciembre</option>
-    </select>
-    <select name="ServicioSelect" id="ServicioSelect" style="float: right">
-        <option label="Promedio" value="PromedioCiudad"></option>.
-        <option label="HorasPorCargoPorCiudad" value="HorasCargoCiudad"></option>
-        <option label="IndicesAnalista" value="IndicesAnalista"></option>
-    </select>
+
+<div id="dashboard_div" style="border: 5px solid #ccc ; height: 100px; background-color: lightgray">
+    <h1 style="float: left;">Criterios de Busqueda:  </h1>
+    <div id="filtroCiudad_div" style="float:left; padding-left: 30px;"></div>
+    <div id="filtroServicio_div" style="float:left; padding-left: 30px;"></div>
 
 </div>
-<div class="mensaje"></div>
-
-    <div id="chart_div" style="min-width: 250px"></div>
-
+    <h3>Filtros</h3>
+    <div id="CriteriosBusqueda" style="float: left; border: solid">
+        <p>Seleccione el Año</p>
+        <div class="styled-select">
+            <select name="anoSelect" id="anoSelect">
+                <option value="2015">2015</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+                <option value="2010">2010</option>
+                <option value="2009">2009</option>
+                <option value="2008">2008</option>
+                <option value="2007">2007</option>
+                <option value="2006">2006</option>
+                <option value="2005">2005</option>
+                <option value="2004">2004</option>
+                <option value="2003">2003</option>
+                <option value="2002">2002</option>
+                <option value="2001">2001</option>
+            </select>
+        </div>
+        <p>Seleccione el Mes</p>
+        <select name="mesSelect" id="mesSelect">
+            <option value="1">Enero</option>
+            <option value="2">Febrero</option>
+            <option value="3">Marzo</option>
+            <option value="4">Abril</option>
+            <option value="5">Mayo</option>
+            <option value="6">Junio</option>
+            <option value="7">Julio</option>
+            <option value="8">Agosto</option>
+            <option value="9">Septiembre</option>
+            <option value="10">Octube</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select>
+        <p>Seleccione el Servicio</p>
+        <select name="ServicioSelect" id="ServicioSelect">
+            <option label="Promedio" value="PromedioCiudad"></option>.
+            <option label="HorasPorCargoPorCiudad" value="HorasCargoCiudad"></option>
+            <option label="IndicesAnalista" value="IndicesAnalista"></option>
+            <option label="HorasPorAnalista" value="HorasPorAnalista"></option>
+        </select>
+        <p>Seleccione el Analista</p>
+        <select name="AnalistaSelect" id="AnalistaSelect">
+        </select>
+    </div>
+    <div id="calendar_div" style="min-width: 250px; float: left"></div>
+    <div id="chart_div" style="min-width: 250px; float: left"></div>
 </div>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="assets/bootstrap.min.js"></script>
@@ -65,7 +77,6 @@
                 obj = {},
                 pair,
                 i;
-
         for ( i in pairs ) {
             if ( pairs[i] === "" ) continue;
 
@@ -76,9 +87,9 @@
         return obj;
     }
     // Load the Visualization API and the piechart package.
-    google.load('visualization', '1', {'packages':['corechart','controls','table']});
+    google.load('visualization', '1', {'packages':['corechart','controls','table', 'calendar']});
     // Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(drawChart);
+    //google.setOnLoadCallback(drawChart);
 
     $("#mesSelect").on("change", function(e){
         $.data(document.body, "mes", this.value);
@@ -94,31 +105,67 @@
         $.data(document.body, "url", this.value);
         onChange();
     });
+    $("#AnalistaSelect").on("change", function(e){
+        $.data(document.body, "analista", this.value);
+        onChange();
+    });
     function onChange(){
         // actualizar el ano y mes
         var data = {
             ano: $.data(document.body, "ano"),
             mes: $.data(document.body, "mes"),
-            url: $.data(document.body, "url")
+            url: $.data(document.body, "url"),
+            analista:$.data(document.body, "analista")
         };
-
-        drawChart(null, data.ano, data.mes, data.url);
+        console.log(data);
+        //drawChart(null, data.ano, data.mes, data.url);
         window.location.hash = "#?"+$.param(data);
         window.location.reload();
     }
 
-    function drawChart(e, ano, mes, url) {
-       // console.log(ano,mes);
+    //fill the dynamically the analysts <select>
+    var $select = $('#AnalistaSelect');
+    $.getJSON('http://localhost:4000/api/IdNombreAnalista', function(data){
+        $.each(data, function(key, val){
+            $select.append('<option value="' + val.Id + '">' + val.Nombre + '</option>');
+        })
+    });
+
+    function convertToDate(data){
+        var dateIndexes = [];
+        data['cols'].forEach(function(col, i){
+            var index = 0;
+            if (col.type === 'date') index = 1;
+            dateIndexes.push(index);
+        });
+
+        data['rows'].forEach(function(row, indexRow){
+            row['c'].forEach(function(value, indexValue){
+                if (dateIndexes[indexValue] === 1){
+                    var dateSlices = value['v'].substr(0,10).split("-");
+                    data['rows'][indexRow]['c'][indexValue]['v'] =
+                            new Date(parseInt(dateSlices[0]),
+                                    parseInt(dateSlices[1])-1,
+                                    parseInt(dateSlices[2]));
+                }
+            });
+        });
+
+        return data;
+    }
+
+    function drawChart(e, ano, mes, url, analista) {
         var ano = ano || 2015;
         var mes = mes || 1;
         var urls = url || "PromedioCiudad";
+        var analista = analista;
         var jsonData = $.ajax({
             url: "http://localhost:4000/api/"+urls,
             dataType:"json",
             data: {"ano": ano, "mes": mes}
         }).then(function(data, textStatus){
             changeService(urls);
-            draw(data);
+            draw(convertToDate(data));
         }, function(xhr, textStatus){
             console.log("ERROR 123");
         });
@@ -133,7 +180,10 @@
         $.data(document.body, "ano", searchObj.ano);
         $("#ServicioSelect").val(searchObj.url);
         $.data(document.body, "url", searchObj.url);
-        drawChart(null, searchObj.ano, searchObj.mes, searchObj.url);
+        $("#AnalistaSelect").val(searchObj.analista);
+        $.data(document.body, "analista", searchObj.analista);
+
+        drawChart(null, searchObj.ano, searchObj.mes, searchObj.url, searchObj.analista);
     });
 
     function changeService(service){

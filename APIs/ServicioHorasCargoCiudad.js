@@ -6,13 +6,10 @@ var SQLQuery =  require('./SQLQueries.js');
 var DBConnection =  require('./DBConnection.js');
 var DBPreparedParams = require('./DBPreparedParams');
 var formater = require('../node_modules/sprintf-js/src/sprintf.js');
+var CurrencyConverter = require('./CurrencyConverter.js');
 var connection = DBConnection.getConnection();
 
 var ServicioHorasCargoCiudad = function(){
-    this.ano;
-    this.mes;
-    this.fechaInicio;
-    this.fechaFin;
 
     this.cols = [
         {label:'CargoN', type:'string', format: null},
@@ -23,31 +20,24 @@ var ServicioHorasCargoCiudad = function(){
         {label:'PromedioValorHora', type:'number', format: "currency"},
         {label:'TotalHorasCargo', type:'number', format: null},
         {label:'TotalHorasServicioCiudad', type:'number', format: null},
-        {label:'IndiceServicioCargo', type:'number', format: null}
+        {label:'IndiceServicioCargo', type:'number', format: "percentage"}
     ];
 };
 /*
  *  @private
  *
  */
-ServicioHorasCargoCiudad.prototype.prepareParams = function(ano, mes){
-    var feb = 28;
-    if(ano%4==0)
-        feb = 29;
-    var dias = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    this.ano= ano;
-    this.mes= mes;
-    this.fechaInicio= formater.vsprintf("%s-%s-%s", [ano, mes, "1"]);
-    this.fechaFin= formater.vsprintf("%s-%s-%s", [ano, mes, dias[mes-1]]);
-};
 
-ServicioHorasCargoCiudad.prototype.getResults = function(ano, mes, callback){
-    this.prepareParams(ano, mes);
+
+ServicioHorasCargoCiudad.prototype.getResults = function(callback,ano,mes){
+    var fechas = this.prepareParams(ano, mes);
     var params = [
-        new DBPreparedParams('ano',this.ano,'number'),
-        new DBPreparedParams('mes',this.mes,'number'),
-        new DBPreparedParams('fechaInicio',this.fechaInicio,'string'),
-        new DBPreparedParams('fechaFin',this.fechaFin,'string')
+        new DBPreparedParams('ano',fechas.ano,'number'),
+        new DBPreparedParams('mes',fechas.mes,'number'),
+        new DBPreparedParams('fechaInicio',fechas.fechaInicio,'string'),
+        new DBPreparedParams('fechaFin',fechas.fechaFin,'string'),
+        new DBPreparedParams('sol',CurrencyConverter.PENtoCOP,'double'),
+        new DBPreparedParams('dollar',CurrencyConverter.USDtoCOP,'double')
     ];
     DBConnection.prepare(SQLQuery.HorasServicioCargoCiudad, params, callback);
 };

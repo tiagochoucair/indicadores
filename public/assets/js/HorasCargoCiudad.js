@@ -15,6 +15,4 @@
 
         // Instantiate and draw our chart, passing in some options.
         dashboard.draw(data);
-
-
 }

@@ -3,6 +3,9 @@
  */
 
 ;function draw(jsonData){
+    console.log(jsonData);
+    var jdata = JSON.stringify(jsonData);
+    console.dir(jdata);
     // Create our data table out of JSON data loaded from server.
     var data = new google.visualization.DataTable(jsonData);
     var dashboard = new google.visualization.Dashboard(
@@ -12,9 +15,10 @@
     filtroCiudad = new google.visualization.ControlWrapper({
         'controlType': 'CategoryFilter',
         'containerId': 'filtroCiudad_div',
+        'label': 'Ciudad',
         'options': {
             'filterColumnLabel': 'CiudadN',
-            'ui': {'labelStacking': 'vertical', 'allowTyping': false, 'allowMultiple': false}
+            'ui': {'labelStacking': 'vertical', 'allowTyping': false, 'allowMultiple': false, 'caption': 'Todos'}
         }
     });
 
@@ -23,12 +27,12 @@
         'containerId': 'filtroServicio_div',
         'options': {
             'filterColumnLabel': 'ServicioN',
-            'ui': {'labelStacking': 'vertical', 'allowTyping': false, 'allowMultiple': true}
+            'ui': {'labelStacking': 'vertical', 'allowTyping': false, 'allowMultiple': true, 'caption': 'Todos'}
 
         }
     });
 
-    dynamicChart  = new google.visualization.ChartWrapper({
+    var dynamicChart  = new google.visualization.ChartWrapper({
         'chartType': 'BubbleChart',
         'containerId': 'chart_div',
         'options': {
@@ -43,5 +47,5 @@
     // Instantiate and draw our chart, passing in some options.
     dashboard.bind(filtroCiudad, filtroServicio);
     dashboard.bind([filtroCiudad, filtroServicio], dynamicChart);
-    dashboard.draw(data);
+    dashboard.draw(data, {is3D: true});
 }
