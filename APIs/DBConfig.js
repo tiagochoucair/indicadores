@@ -1,6 +1,6 @@
 var DBConfig = {
         user: '',
-        password: '+',
+        password: '',
         server: '', // You can use 'localhost\\instance' to connect to named instance
         database: '',
 
