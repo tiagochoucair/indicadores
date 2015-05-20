@@ -6,6 +6,11 @@ var ServicioIndicesAnalista = require('./ServicioIndicesAnalista.js');
 var GoogleChartAdapter = require('./GoogleChartAdapter.js');
 var ServicioIdNombreAnalista = require('./ServicioIdNombreAnalista.js');
 var ServicioHorasPorAnalista = require('./ServicioHorasPorAnalista.js');
+var ServicioIndiceClientes = require('./ServicioIndicesClientes.js');
+var ServicioFaltaTarifaMes = require('./ServicioFaltaTarifaMes.js');
+var ServicioFaltaTarifaMesGoogle = require('./ServicioFaltaTarifaMesGoogle.js');
+var ServicioReporteMaxTime = require('./ServicioReporteMaxTime.js');
+
 var PrepareParams = require('./PrepareParams.js');
 
 
@@ -15,7 +20,6 @@ var server = http.createServer(function (req, res) {
     var ano = parsedUrl.query.ano;
     var analista=parsedUrl.query.analista;
     var servicio;
-    var parametros;
 
     if (/^\/api\/PromedioCiudad/.test(req.url)) {
         servicio = new ServicioPromedioCiudad();
@@ -31,17 +35,29 @@ var server = http.createServer(function (req, res) {
     }
     if (/^\/api\/IdNombreAnalista/.test(req.url)) {
         servicio = new ServicioIdNombreAnalista();
-        servicio.getResults(awriteIdNombreAnalista(servicio),ano,mes);
+        servicio.getResults(writeDataNoGoogle());
     }
     if (/^\/api\/HorasPorAnalista/.test(req.url)) {
         servicio = new ServicioHorasPorAnalista();
-        servicio.getResults(writeData(servicio),analista);
+        servicio.getResults(writeData(servicio), analista);
+    }
+    if (/^\/api\/IndicesClientes/.test(req.url)) {
+        servicio = new ServicioIndiceClientes();
+        servicio.getResults(writeData(servicio),ano,mes);
+    }
+    if (/^\/api\/FaltaTarifaMesInterno/.test(req.url)) {
+        servicio = new ServicioFaltaTarifaMes();
+        servicio.getResults(writeDataNoGoogle(),ano, mes);
     }
 
-    function prepareParams (ano, mes, analista){
-
+    if (/^\/api\/FaltaTarifaMes/.test(req.url)) {
+        servicio = new ServicioFaltaTarifaMesGoogle();
+        servicio.getResults(writeData(servicio),ano, mes);
     }
-
+        if (/^\/api\/MaxTimeReport/.test(req.url)) {
+        servicio = new ServicioReporteMaxTime();
+        servicio.getResults(writeData(servicio),ano, mes);
+    }
 
     function writeData(servicio){
         return function(data){
@@ -52,7 +68,7 @@ var server = http.createServer(function (req, res) {
         }
     }
 
-    function writeIdNombreAnalista(servicio){
+    function writeDataNoGoogle(){
         return function(data){
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': "*"});
             res.end(JSON.stringify(data));

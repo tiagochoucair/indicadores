@@ -14,7 +14,7 @@ var ServicioPromedioCiudad = function(){
     this.cols = [
         {label:'ServicioN', type:'string', format: null},
         {label:'CantidadTotalHoras', type:'number', format: null},
-        {label:'PromedioValorHora', type:'number', format: null},
+        {label:'PromedioValorHora', type:'number', format: "currency"},
         {label:'CiudadN', type:'string', format: null},
         {label:'IgresosServicio', type:'number', format: "currency"}
     ];
@@ -25,36 +25,15 @@ var ServicioPromedioCiudad = function(){
  *  @private
  *
  */
-ServicioPromedioCiudad.prototype.prepareParams = function(ano, mes){
-    var params = {
-        ano: null,
-        mes: null,
-        fechaInicio: null,
-        fechaFin: null
-    };
-    var feb = 28;
-    if(ano%4==0)
-        feb = 29;
-    var dias = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    params.ano= ano;
-    params.mes= mes;
-    params.fechaInicio= formater.vsprintf("%s-%s-%s", [ano, mes, "1"]);
-    params.fechaFin= formater.vsprintf("%s-%s-%s", [ano, mes, dias[mes-1]]);
-
-    return params;
-};
 
 ServicioPromedioCiudad.prototype.getResults = function(callback, ano, mes){
-    var fechas = this.prepareParams(ano,mes);
 
     var params = [
-        new DBPreparedParams('ano',fechas.ano,'number'),
-        new DBPreparedParams('mes',fechas.mes,'number'),
-        new DBPreparedParams('fechaInicio',fechas.fechaInicio,'string'),
-        new DBPreparedParams('fechaFin',fechas.fechaFin,'string'),
-        new DBPreparedParams('sol',CurrencyConversion.sol,'double'),
-        new DBPreparedParams('dollar',CurrencyConversion.dollar,'double')
+        new DBPreparedParams('ano',ano,'number'),
+        new DBPreparedParams('mes',mes,'number'),
+        new DBPreparedParams('sol',CurrencyConversion.PENtoCOP,'double'),
+        new DBPreparedParams('dollar',CurrencyConversion.USDtoCOP,'double')
     ];
     DBConnection.prepare(SQLQuery.PromedioServicioCiudad, params, callback);
 };

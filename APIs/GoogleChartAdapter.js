@@ -5,17 +5,53 @@
 var numeral = require('./numeral.min.js');
 
 var GoogleChartAdapter = function(){
+    this.formatCurrency = formatCurrency;
+    this.itemDataToCurrency = itemDataToCurrency;
+    this.convertColsToCurrency = convertColsToCurrency;
 
+     function formatCurrency(value){
+        var num = numeral(value);
+        numeral.defaultFormat('$0,0.00');
+        return num.format();
+    }
+    /**
+     *
+     * @param {Object} itemData
+     * @param {string|number} itemData.value
+     * @param {string} itemData.format
+     */
+    function itemDataToCurrency(itemData){
+        itemData.format = this.formatCurrency(itemData.value);
+    }
+
+    /**
+     *
+     * @param {DataTable} datatable
+     * @param {Array<number>} cols
+     */
+    function convertColsToCurrency(datatable, cols){
+        var rows = datatable['rows'];
+        rows.forEach(function(rowCols){
+            rowCols['c'].forEach(function(itemData, i){
+                if (cols.indexOf(i) >= 0) {
+                    this.itemDataToCurrency(itemData);
+                }
+            });
+        });
+        datatable['rows'] = rows;
+        return datatable;
+    }
 };
+
+
+
 
 GoogleChartAdapter.prototype.formatValue = function(value, format){
     var formatedValue;
 
     switch(format){
         case "currency":
-            var num = numeral(value);
-            numeral.defaultFormat('$0,0.00');
-            formatedValue = num.format();
+            formatedValue = this.formatCurrency(value);
             break;
         case "percentage":
             var num = numeral(value);

@@ -1,5 +1,7 @@
 var sql = require('mssql');
 var DBConfig = require('./DBConfig.js');
+var excelbuilder = require('msexcel-builder');
+
 var DBConecction = function(config){
     this.config = config;
     this.connection = new sql.Connection(this.config, function (err) {
@@ -41,6 +43,8 @@ DBConecction.prototype.getConnection = function(){
 DBConecction.prototype.prepare = function(query, params, callback){
     var ps = new sql.PreparedStatement(this.connection);
     var self = this;
+
+
     var paramsQuery = {};
     if(!!params){
         params.forEach(function(param){
@@ -48,6 +52,8 @@ DBConecction.prototype.prepare = function(query, params, callback){
             paramsQuery[param.name] = param.value;
         });
     }
+
+
     ps.prepare( query , function(err) {
         // ... error checks
         ps.execute(paramsQuery, function(err, recordset) {
@@ -55,7 +61,9 @@ DBConecction.prototype.prepare = function(query, params, callback){
             ps.unprepare(function(err) {
                 // ... error checks
             });
+            //console.log(recordset);
             callback(recordset);
+
         });
     });
 }

@@ -19,8 +19,8 @@ var ServicioHorasCargoCiudad = function(){
         {label:'IngresosServicioCargo', type:'number', format: "currency"},
         {label:'PromedioValorHora', type:'number', format: "currency"},
         {label:'TotalHorasCargo', type:'number', format: null},
-        {label:'TotalHorasServicioCiudad', type:'number', format: null},
-        {label:'IndiceServicioCargo', type:'number', format: "percentage"}
+        {label:'IndiceServicioCargo', type:'number', format: "percentage"},
+        {label:'TotalHorasServicioCiudad', type:'number', format: null}
     ];
 };
 /*
@@ -30,12 +30,10 @@ var ServicioHorasCargoCiudad = function(){
 
 
 ServicioHorasCargoCiudad.prototype.getResults = function(callback,ano,mes){
-    var fechas = this.prepareParams(ano, mes);
+
     var params = [
-        new DBPreparedParams('ano',fechas.ano,'number'),
-        new DBPreparedParams('mes',fechas.mes,'number'),
-        new DBPreparedParams('fechaInicio',fechas.fechaInicio,'string'),
-        new DBPreparedParams('fechaFin',fechas.fechaFin,'string'),
+        new DBPreparedParams('ano',ano,'number'),
+        new DBPreparedParams('mes',mes,'number'),
         new DBPreparedParams('sol',CurrencyConverter.PENtoCOP,'double'),
         new DBPreparedParams('dollar',CurrencyConverter.USDtoCOP,'double')
     ];

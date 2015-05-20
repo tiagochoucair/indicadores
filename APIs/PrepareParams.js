@@ -30,10 +30,4 @@ PrepareParams.prototype.prepare = function(ano, mes){
 
 };
 
-PrepareParams.prototype.prepare = function(analista){
-
-    this.params.analista = analista;
-
-    return this.params;
-};
 module.exports = PrepareParams;

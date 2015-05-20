@@ -6,7 +6,7 @@ var SQLQuery =  require('./SQLQueries.js');
 var DBConnection =  require('./DBConnection.js');
 var DBPreparedParams = require('./DBPreparedParams');
 var connection = DBConnection.getConnection();
-var CurrencyConversion = require('./CurrencyConverter.js');
+var CurrencyConverter = require('./CurrencyConverter.js');
 
 var ServicioHorasPorAnalista = function(){
 
@@ -36,11 +36,11 @@ var ServicioHorasPorAnalista = function(){
  *  @private
  *
  */
-ServicioHorasPorAnalista.prototype.getResults = function(callback,ano,mes,analista){
+
+ServicioHorasPorAnalista.prototype.getResults = function(callback,analista){
 
     var params = [
-        new DBPreparedParams('sol',CurrencyConversion.PENtoCOP,'double'),
-        new DBPreparedParams('dollar',CurrencyConversion.USDtoCOP,'double')
+        new DBPreparedParams('analista',analista,'string')
     ];
     DBConnection.prepare(SQLQuery.HorasPorAnalista, params, callback);
 };

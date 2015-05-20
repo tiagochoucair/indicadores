@@ -14,16 +14,33 @@ var ServicioIndicesAnalista = function(){
     this.cols = [
         {label:'AnalistaN', type:'string', format: null},
         {label:'Cargo', type:'string', format: null},
+        {label:'IE', type:'number', format: "percentage"},
         {label:'IOP', type:'number', format: "percentage"},
-        {label:'IF', type:'number', format: "percentage"},
+        {label:'IFs', type:'number', format: "percentage"},
         {label:'Analista', type:'number', format: null},
         {label:'HorasLaborales', type:'number', format: null},
         {label:'Incap', type:'number', format: null},
         {label:'Vac', type:'number', format: null},
+        {label:'Comp', type:'number', format: null},
+        {label:'Preventa', type:'number', format: null},
+        {label:'Induccion', type:'number', format: null},
+        {label:'Informacion', type:'number', format: null},
+        {label:'Error', type:'number', format: null},
+        {label:'ProyectoChoucair', type:'number', format: null},
         {label:'HorasFacturables', type:'number', format: null},
+        {label:'HorasNoFacturables', type:'number', format: null},
         {label:'HANF', type:'number', format: null},
         {label:'HAF', type:'number', format: null},
-        {label:'HASC', type:'number', format: null}
+        {label:'HASC', type:'number', format: null},
+        {label:'CargoID', type:'number', format: null},
+        {label:'HorasRegistradas', type:'number', format: null},
+        {label:'SueldoPromedio', type:'number', format: null},
+        {label:'Ciudad', type:'number', format: null},
+        {label:'CiudadN', type:'string', format: null},
+        {label:'Pais', type:'string', format: null},
+        {label:'Ingresos', type:'number', format: "currency"},
+        {label:'NoIngresos', type:'number', format: "currency"}
+
 
     ];
 };
@@ -31,32 +48,18 @@ var ServicioIndicesAnalista = function(){
  *  @private
  *
  */
-ServicioIndicesAnalista.prototype.prepareParams = function(ano, mes){
-    var params = {
-        fechaInicio:null,
-        fechaFin: null
-    };
-    var feb = 28;
-    if(ano%4==0)
-        feb = 29;
-    var dias = [31, feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    params.fechaInicio = formater.vsprintf("%s-%s-%s", [ano, mes, "1"]);
-    params.fechaFin= formater.vsprintf("%s-%s-%s", [ano, mes, dias[mes-1]]);
 
-    return params;
-};
+ServicioIndicesAnalista.prototype.getResults = function(callback,ano,mes){
 
-ServicioIndicesAnalista.prototype.getResults = function(callback,ano,mes,analista){
-
-    var fechas = this.prepareParams(ano,mes);
     var params = [
-        new DBPreparedParams('fechaInicio',fechas.fechaInicio,'string'),
-        new DBPreparedParams('fechaFin',fechas.fechaFin,'string'),
-        new DBPreparedParams('sol',CurrencyConversion.sol,'number'),
-        new DBPreparedParams('dollar',CurrencyConversion.dollar,'number')
+        new DBPreparedParams('ano',ano,'number'),
+        new DBPreparedParams('mes',mes,'number'),
+        new DBPreparedParams('sol',CurrencyConversion.PENtoCOP,'double'),
+        new DBPreparedParams('dollar',CurrencyConversion.USDtoCOP,'double')
     ];
     DBConnection.prepare(SQLQuery.IndicesAnalistasServicio, params, callback);
 };
 
 
 module.exports = ServicioIndicesAnalista;
+

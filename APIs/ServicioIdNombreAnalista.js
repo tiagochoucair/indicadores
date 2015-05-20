@@ -10,8 +10,9 @@ var ServicioIdNombreAnalista = function(){
 
 };
 
-ServicioIdNombreAnalista.prototype.getResults = function(callback,ano,mes,analista){
+ServicioIdNombreAnalista.prototype.getResults = function(callback){
     var params = null;
+
     DBConnection.prepare(SQLQuery.IdNombreAnalistas, params, callback);
 };
 
