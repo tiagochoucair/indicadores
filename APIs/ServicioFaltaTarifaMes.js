@@ -14,7 +14,6 @@ var ServicioFaltaTarifaMes = function(){
 };
 
 ServicioFaltaTarifaMes.prototype.getResults = function(callback, ano, mes){
-    console.log("ano y mes ", ano, mes);
     var params = [
         new DBPreparedParams('ano',ano,'number'),
         new DBPreparedParams('mes',mes,'number')

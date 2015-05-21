@@ -6,9 +6,13 @@ var SQLQuery =  require('./SQLQueries.js');
 var DBConnection =  require('./DBConnection.js');
 var DBPreparedParams = require('./DBPreparedParams');
 var CurrencyConversion = require('./CurrencyConverter.js');
+var json2xls = require('../node_modules/json2xls/lib/json2xls.js');
+var fs = require('fs');
+
 var connection = DBConnection.getConnection();
 
 var ServicioReporteMaxTime = function(){
+    this.file = 'ReporteMaxTime.xlsx';
 
     this.cols = [
         {label:'Sector', type:'string', format: null},
@@ -31,13 +35,20 @@ var ServicioReporteMaxTime = function(){
         {label:'Horas', type:'number', format: null},
         {label:'Comentario', type:'string', format: null}
 
-
     ];
 };
 /*
  *  @private
  *
  */
+
+ServicioReporteMaxTime.prototype.saveDataXls = function(jsonData){
+
+    var xls = json2xls(jsonData);
+    fs.writeFileSync(this.file, xls, 'binary');
+    return fs.readFileSync(this.file);
+    
+};
 
 
 ServicioReporteMaxTime.prototype.getResults = function(callback,ano,mes){

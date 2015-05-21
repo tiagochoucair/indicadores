@@ -8,8 +8,7 @@ function draw(jsonData) {
     var data = new google.visualization.DataTable(jsonData);
     var dashboard = new google.visualization.Dashboard(
         document.getElementById('dashboard_div'));
-    //var formatter = new google.visualization.ArrowFormat();
-    //formatter.format(data, 2); // Apply formatter to second columna
+    var trIndices = new tableRowIndices();
 
 
     var chartCiudadIndices = charts("BarChart","chart1_div",
@@ -94,6 +93,7 @@ function draw(jsonData) {
      * @param {Array<string>=} colors
      * @returns {google.visualization.ChartWrapper}
      */
+
     function charts(chartType,containerId, title,vAxisTitle, hAxisTitle,format,height, orientation, colors){
         var chart = new google.visualization.ChartWrapper({
             'chartType': chartType,
@@ -101,7 +101,7 @@ function draw(jsonData) {
             'options': {
                 title: title,
                 vAxis: {title: vAxisTitle, minValue: 0, format: format},
-                hAxis: {title: hAxisTitle, format: format},
+                hAxis: {title: hAxisTitle, minValue: 0,format: format},
                 height: height,
                 colors: colors,
                 orientation: orientation
@@ -167,31 +167,14 @@ function draw(jsonData) {
         var dt = tableChart.getDataTable();
         var gca = new GoogleChartAdapter();
 
-        var groupedDataCiudadIndices = groupDataIndices([24]);
-        var groupedDataAnalistaIndices = groupDataIndices([0]);
-        var groupedDataCargoIndices = groupDataIndices([1]);
-        function groupDataIndices(groupColumn) {
-            var groupedDataTable = google.visualization.data.group(dt, groupColumn, [{
-                column: 2,
-                label: 'Avg IE',
-                aggregation: google.visualization.data.avg,
-                type: 'number'
+        var ciudad = dt.getDistinctValues(24);
+        var cargo = dt.getDistinctValues(1);
+        var analista = dt.getDistinctValues(0);
 
-            }, {
-                column: 3,
-                label: 'Avg IOP',
-                aggregation: google.visualization.data.avg,
-                type: 'number'
-            }, {
-                column: 4,
-                label: 'Avg IF',
-                type: 'number',
-                aggregation: google.visualization.data.avg
+        var ciudadIndicesTable = trIndices.createIndexesData(dt, 24, ciudad, 6, 15, 18, 19, 7, 8);
+        var cargoIndicesTable = trIndices.createIndexesData(dt, 1, cargo, 6, 15, 18, 19, 7, 8);
+        var analistaIndicesTable = trIndices.createIndexesData(dt, 0, analista, 6, 15, 18, 19, 7, 8);
 
-            }]);
-
-            return groupedDataTable;
-        }
 
         var groupedDataCiudadSumIngresos = groupDataSumIngresos([24]);
         var groupedDataCargoSumIngresos = groupDataSumIngresos([1]);
@@ -322,18 +305,22 @@ function draw(jsonData) {
         };
 
 
-        chartCiudadIndices.setDataTable(gca.convertColsToPercentage(groupedDataCiudadIndices,[1,2,3]));
-        chartAnalistaIndices.setDataTable(gca.convertColsToPercentage(groupedDataAnalistaIndices,[1,2,3]));
-        chartCargoIndices.setDataTable(gca.convertColsToPercentage(groupedDataCargoIndices,[1,2,3]));
+        chartCiudadIndices.setDataTable(gca.convertColsToPercentage(ciudadIndicesTable,[1,2,3]));
+        chartAnalistaIndices.setDataTable(gca.convertColsToPercentage(analistaIndicesTable,[1,2,3]));
+        chartCargoIndices.setDataTable(gca.convertColsToPercentage(cargoIndicesTable,[1,2,3]));
+
         chartCiudadSUMIngresos.setDataTable(gca.convertColsToCurrency(groupedDataCiudadSumIngresos,[1,2]));
         chartCargoSUMIngresos.setDataTable(gca.convertColsToCurrency(groupedDataCargoSumIngresos,[1,2]));
         chartAnalistaSUMIngresos.setDataTable(gca.convertColsToCurrency(groupedDataAnalistaSumIngresos,[1,2]));
+
         chartCiudadSumHoras.setDataTable(groupedDataCiudadSumHoras);
         chartCargoSumHoras.setDataTable(groupedDataCargoSumHoras);
         chartAnalistaSumHoras.setDataTable(groupedDataAnalistaSumHoras);
+
         chartCiudadCampos.setDataTable(groupedDataCiudadCampos);
         chartCargosCampos.setDataTable(groupedDataCargosCampos);
         chartAnalistaCampos.setDataTable(groupedDataAnalistasCampos);
+
         chartCiudadIndices.draw();
         chartCargoIndices.draw();
         chartAnalistaIndices.draw();

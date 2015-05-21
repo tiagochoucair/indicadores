@@ -10,7 +10,6 @@ var ServicioIndiceClientes = require('./ServicioIndicesClientes.js');
 var ServicioFaltaTarifaMes = require('./ServicioFaltaTarifaMes.js');
 var ServicioFaltaTarifaMesGoogle = require('./ServicioFaltaTarifaMesGoogle.js');
 var ServicioReporteMaxTime = require('./ServicioReporteMaxTime.js');
-
 var PrepareParams = require('./PrepareParams.js');
 
 
@@ -54,9 +53,13 @@ var server = http.createServer(function (req, res) {
         servicio = new ServicioFaltaTarifaMesGoogle();
         servicio.getResults(writeData(servicio),ano, mes);
     }
-        if (/^\/api\/MaxTimeReport/.test(req.url)) {
+    if (/^\/api\/ReporteMaxTime/.test(req.url)) {
         servicio = new ServicioReporteMaxTime();
         servicio.getResults(writeData(servicio),ano, mes);
+    }
+    if (/^\/api\/DownloadReport/.test(req.url)) {
+        servicio = new ServicioReporteMaxTime();
+        servicio.getResults(downloadReport(servicio),ano, mes);
     }
 
     function writeData(servicio){
@@ -72,6 +75,15 @@ var server = http.createServer(function (req, res) {
         return function(data){
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': "*"});
             res.end(JSON.stringify(data));
+        }
+    }
+    function downloadReport(servicio){
+        return function(data){
+            res.writeHead(200, { 
+                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8', 
+                'Access-Control-Allow-Origin': "*"});
+            res.end(servicio.saveDataXls(data));
+
         }
     }
 

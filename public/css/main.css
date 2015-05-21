@@ -1904,9 +1904,11 @@ th {
   text-align: left; }
 
 .table {
-  width: 100%;
+  width: 70%;
   max-width: 100%;
-  margin-bottom: 20px; }
+  margin-bottom: 20px; 
+  margin-right: auto;
+  margin-left: auto;}
   .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
     padding: 8px;
     line-height: 1.42857;
@@ -1981,9 +1983,9 @@ table td[class*="col-"], table th[class*="col-"] {
 .table-responsive {
   overflow-x: auto;
   min-height: 0.01%; }
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 500px) {
     .table-responsive {
-      width: 100%;
+      width: 50%;
       margin-bottom: 15px;
       overflow-y: hidden;
       -ms-overflow-style: -ms-autohiding-scrollbar;
@@ -2376,6 +2378,8 @@ textarea.input-lg, .input-group-lg > textarea.form-control, .input-group-lg > te
 
 .btn {
   display: inline-block;
+  margin-right: auto;
+  margin-left: auto; 
   margin-bottom: 0;
   font-weight: normal;
   text-align: center;
@@ -2415,8 +2419,9 @@ textarea.input-lg, .input-group-lg > textarea.form-control, .input-group-lg > te
 
 .btn-default {
   color: #333;
-  background-color: #fff;
-  border-color: #ccc; }
+  background-color: #D0D0D0;
+  border-color: #ccc;
+  vertical-align: middle;}
   .btn-default:hover, .btn-default:focus, .btn-default.focus, .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
     color: #333;
     background-color: #e6e6e6;

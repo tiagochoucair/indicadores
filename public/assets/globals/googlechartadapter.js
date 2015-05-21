@@ -85,10 +85,4 @@ var GoogleChartAdapter = function(){
         return datatableJSON;
     }
 
-
-    function saveReport(datatable){
-        
-    }
-
-
 };

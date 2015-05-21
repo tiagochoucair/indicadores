@@ -10,6 +10,7 @@ var CurrencyConversion = require('./CurrencyConverter.js');
 var connection = DBConnection.getConnection();
 
 var ServicioIndicesAnalista = function(){
+    this.file = 'Reporte.xlsx';
 
     this.cols = [
         {label:'AnalistaN', type:'string', format: null},
@@ -48,7 +49,13 @@ var ServicioIndicesAnalista = function(){
  *  @private
  *
  */
+ServicioIndicesAnalista.prototype.saveDataXls = function(jsonData){
 
+    var xls = json2xls(jsonData);
+    fs.writeFileSync(this.file, xls, 'binary');
+    return fs.readFileSync(this.file);
+    
+};
 ServicioIndicesAnalista.prototype.getResults = function(callback,ano,mes){
 
     var params = [

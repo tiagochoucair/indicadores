@@ -10,6 +10,7 @@ var CurrencyConverter = require('./CurrencyConverter.js');
 
 var ServicioHorasPorAnalista = function(){
 
+    this.file = 'Reporte.xlsx';
     this.cols = [
         {label:'Fecha', type:'date', format: 'date'},
         {label:'Analista', type:'number', format: null},
@@ -36,7 +37,13 @@ var ServicioHorasPorAnalista = function(){
  *  @private
  *
  */
+ServicioHorasPorAnalista.prototype.saveDataXls = function(jsonData){
 
+    var xls = json2xls(jsonData);
+    fs.writeFileSync(this.file, xls, 'binary');
+    return fs.readFileSync(this.file);
+    
+};
 ServicioHorasPorAnalista.prototype.getResults = function(callback,analista){
 
     var params = [

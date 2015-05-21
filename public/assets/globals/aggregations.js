@@ -38,3 +38,5 @@ Aggregation.prototype.customSum = function(dataTable,filters, rowAggregation, co
     };
     return sum;
 };
+
+

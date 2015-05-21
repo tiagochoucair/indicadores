@@ -1,6 +1,5 @@
 var sql = require('mssql');
 var DBConfig = require('./DBConfig.js');
-var excelbuilder = require('msexcel-builder');
 
 var DBConecction = function(config){
     this.config = config;
