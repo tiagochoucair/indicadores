@@ -12,103 +12,123 @@
 <body data-ano="2015" data-mes="1" data-url="IndicesAnalista" data-analista="1">
 
     <div class="container">
-            <div class="jumbotron">
-                <h1>Información</h1>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="dashboard_div" style="border: 5px solid #ccc ; height: 100px; background-color: lightgray">
-                        <h3 style="float:left; padding-left: 30px;">Criterios</h3>
+        <div class="jumbotron">
+            <img class="img-rounded" id="img" src="http://www.choucairtesting.com/assets/Uploads/logochoucair.png" alt="" width="262" height="66" >
+        </div>
 
-                    </div>
+    <button type="button" id="btnModal" class="btn btn-info btn-xs"style="float:right;">
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+    </button>
+        <div class="row">
+            <H3>FILTROS</H3>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="dashboard_div" style="height: 20px;"></div>  
                 </div>
             </div>
+        </div>
+        <select  class="selectpicker span2" title='Seleccione El Servicio' data-width="280px"
+        id="ServicioSelect" data-style="btn-inverse">
+        <option label="IndicesAnalista" value="IndicesAnalista">Panorama De Reportes Por Analista</option>
+        <option label="IndicesClientes" value="IndicesClientes">Panorama De Reportes Por Cliente</option>
+        <option label="HorasPorAnalista" value="HorasPorAnalista">Acompañamiento De Reporte Diario</option>
+        <option label="HorasPorCargoPorCiudad" value="HorasCargoCiudad">Reporte de Horas Por Servicio Por Cargo</option>
+        <option label="FaltaTarifames" value="FaltaTarifaMes">Reporte De Tarifas </option>
+        <option label="ReporteMaxTime" value="ReporteMaxTime">Reporte De MaxTime </option>
+        <option label="ReporteUltimaFecha" value="ReporteUltimaFecha">Reporte Ultima Fecha </option>
+    </select>
+    <select class="selectpicker span2" style="float: left;"  data-width="140px"
+    title='Seleccione El Año' id="anoSelect" data-style="btn-inverse">
+    <option value="0">Seleccione Uno</option>
+    <option value="2015">2015</option>
+    <option value="2014">2014</option>
+    <option value="2013">2013</option>
+    <option value="2012">2012</option>
+</select>
 
-        <div id="CriteriosBusqueda" style="float: left">
-            <H3><span class="label label-default">FILTROS</span></H3>
-                <select class="selectpicker span2" title='Seleccione El Servicio'
-                                                        id="ServicioSelect" data-style="btn-inverse">
-                    <option label="IndicesAnalista" value="IndicesAnalista">Panorama De Reportes Por Analista</option>
-                    <option label="IndicesClientes" value="IndicesClientes">Panorama De Reportes Por Cliente</option>
-                    <option label="HorasPorAnalista" value="HorasPorAnalista">Acompañamiento De Reporte Diario</option>
-                    <option label="HorasPorCargoPorCiudad" value="HorasCargoCiudad">Reporte de Horas Por Servicio Por Cargo</option>
-                    <option label="FaltaTarifames" value="FaltaTarifaMes">Reporte De Tarifas </option>
-                    <option label="ReporteMaxTime" value="ReporteMaxTime">Reporte De MaxTime </option>
-                </select>
-                    <select class="selectpicker span2" style="float: left;" 
-                                title='Seleccione El Año' id="anoSelect" data-style="btn-inverse">
-                        <option value="0">Seleccione Uno</option>
-                        <option value="2015">2015</option>
-                        <option value="2014">2014</option>
-                        <option value="2013">2013</option>
-                        <option value="2012">2012</option>
-                    </select>
+<select class="selectpicker span2" style="float: left;" title='Seleccione El Mese' data-width="140px"
+id="mesSelect" data-style="btn-inverse;">
+<option value="0">Seleccione Uno</option>
+<option value="1">Enero</option>
+<option value="2">Febrero</option>
+<option value="3">Marzo</option>
+<option value="4">Abril</option>
+<option value="5">Mayo</option>
+<option value="6">Junio</option>
+<option value="7">Julio</option>
+<option value="8">Agosto</option>
+<option value="9">Septiembre</option>
+<option value="10">Octube</option>
+<option value="11">Noviembre</option>
+<option value="12">Diciembre</option>
+</select>
 
-                <select class="selectpicker span2" style="float: left;" title='Seleccione El Mese' 
-                                id="mesSelect" data-style="btn-inverse;">
-                    <option value="0">Seleccione Uno</option>
-                    <option value="1">Enero</option>
-                    <option value="2">Febrero</option>
-                    <option value="3">Marzo</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Mayo</option>
-                    <option value="6">Junio</option>
-                    <option value="7">Julio</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Septiembre</option>
-                    <option value="10">Octube</option>
-                    <option value="11">Noviembre</option>
-                    <option value="12">Diciembre</option>
-                </select>
+<select name="AnalistaSelect" data-live-search="true" title='Seleccione El Analista' data-width="330px"
+data-hide-disabled: true  class="selectpicker span4" id="AnalistaSelect" data-style="btn-inverse;">
+</select>     
 
-                <select name="AnalistaSelect" data-live-search="true" title='Seleccione El Analista' style="float:left;" 
-                               class="selectpicker span2" id="AnalistaSelect" data-style="btn-inverse">
-                </select>
+</div>
+
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Decripción de Campos</h4>
+            </div>
+            <div class="col-md-6">
+                <b style="font-size: medium">IF</b>
+                <b>=</b>
+                Horas Facturables / Horas Laborales
+            </div>
+            <div class="col-md-6">       
+                <b style="font-size: medium">IOP</b>
+                <b>=</b>
+                (Horas Facturables - Horas Adicionales) /Horas Laborales
+            </div>        
+            <div class="col-md-6">            
+                <b style="font-size: medium">IE</b>
+                <b>=</b>
+                Horas Facturables / (Horas Laborales - (Incapacidades+Vacaciones))
+            </div>        
+            <div class="col-md-6">             
+                <b style="font-size: medium">Incap</b>
+                <b>=</b>
+                Incapacidades
+            </div>        
+            <div class="col-md-6">         
+                <b style="font-size: medium">Vac</b>
+                <b>=</b>
+                Vacaciones
+            </div>        
+            <div class="col-md-6"> 
+                <b style="font-size: medium">Comp</b>
+                <b>=</b>
+                Compesantorias
+            </div>        
+            <div class="col-md-6"> 
+                <b style="font-size: medium">HANF</b>
+                <b>=</b>
+                Horas Adicionales No Facturables
+            </div>        
+            <div class="col-md-6"> 
+                <b style="font-size: medium">HAF</b>
+                <b>=</b>
+                Horas Adicionales Facturables
+            </div>        
+            <div class="col-md-6">       
+                <b style="font-size: medium">HASC</b>
+                <b>=</b>
+                Horas Adicionales Solicitadas por el Cliente
+            </div>        
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
+</div>
 
-        <div class="table-responsive">
-            <table class="table">
-                <caption>Descripción de Campos</caption>
-                <tr>
-                    <td><b style="font-size: medium">IF</b></td>
-                    <td><b>=</b></td>
-                    <td>Horas Facturables / Horas Laborales</td>
-                    <td><b style="font-size: medium">IOP</b></td>
-                    <td><b>=</b></td>
-                    <td>(Horas Facturables - Horas Adicionales) /Horas Laborales</td>
-                </tr>
-                <tr>
-                    <td><b style="font-size: medium">IE</b></td>
-                    <td><b>=</b></td>
-                    <td>Horas Facturables / (Horas Laborales - (Incapacidades+Vacaciones))</td>
-                    <td><b style="font-size: medium">Incap</b></td>
-                    <td><b>=</b></td>
-                    <td>Incapacidades</td>
-                </tr>
-                <tr>
-                    <td><b style="font-size: medium">Vac</b></td>
-                    <td><b>=</b></td>
-                    <td>Vacaciones</td>
-                    <td><b style="font-size: medium">Comp</b></td>
-                    <td><b>=</b></td>
-                    <td>Compesantorias</td>
-                </tr>
-                <tr>
-                    <td><b style="font-size: medium">HANF</b></td>
-                    <td><b>=</b></td>
-                    <td>Horas Adicionales No Facturables</td>
-                    <td><b style="font-size: medium">HAF</b></td>
-                    <td><b>=</b></td>
-                    <td>Horas Adicionales Facturables</td>
-                </tr>
-                <tr>
-                    <td><b style="font-size: medium">HASC</b></td>
-                    <td><b>=</b></td>
-                    <td>Horas Adicionales Solicitadas por el Cliente</td>
-                </tr>
-            </table>
-        </div>
 <input type="button" class="btn btn-default" id="btnExport" value=" Exportar a Excel " style="display:none;" />
 
 <div id="charts">
@@ -120,9 +140,9 @@
 <script type="text/javascript">
     function searchToObject(urlSearch) {
         var pairs = urlSearch.substring(1).split("&"),
-                obj = {},
-                pair,
-                i;
+        obj = {},
+        pair,
+        i;
         for ( i in pairs ) {
             if ( pairs[i] === "" ) continue;
 
@@ -157,7 +177,15 @@
         onChange();
     });
 
- 
+    $("#filtroCiudad_div").click(function() {
+        $("#dashboard_div").setAttribute(height= height+1);
+    });
+
+    function overlay() {
+        el = document.getElementById("overlay");
+        el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+    }
+
     $('#btnExport').click(function(){
         var data = {
             ano: $.data(document.body, "ano"),
@@ -199,9 +227,9 @@
                 if (dateIndexes[indexValue] === 1){
                     var dateSlices = value['v'].substr(0,10).split("-");
                     data['rows'][indexRow]['c'][indexValue]['v'] =
-                            new Date(parseInt(dateSlices[0]),
-                                    parseInt(dateSlices[1])-1,
-                                    parseInt(dateSlices[2]));
+                    new Date(parseInt(dateSlices[0]),
+                        parseInt(dateSlices[1])-1,
+                        parseInt(dateSlices[2]));
                 }
             });
         });
@@ -239,11 +267,15 @@
         $.data(document.body, "analista", searchObj.analista);
         drawChart(null, searchObj.ano, searchObj.mes, searchObj.url, parseInt(searchObj.analista));
 
+        $("#btnModal").click(function(){
+            $("#myModal").modal('show');
+        });
+
     });
 
     function changeService(service){
         document.getElementById("serviceScript")
-                .setAttribute("src","./assets/js/"+service+".js")
+        .setAttribute("src","./assets/js/"+service+".js")
     }
 
 

@@ -10,6 +10,7 @@ var ServicioIndiceClientes = require('./ServicioIndicesClientes.js');
 var ServicioFaltaTarifaMes = require('./ServicioFaltaTarifaMes.js');
 var ServicioFaltaTarifaMesGoogle = require('./ServicioFaltaTarifaMesGoogle.js');
 var ServicioReporteMaxTime = require('./ServicioReporteMaxTime.js');
+var ServicioUltimaFechaReporteXAnalista = require('./ServicioUltimaFechaReporteXAnalista.js');
 var PrepareParams = require('./PrepareParams.js');
 
 
@@ -57,9 +58,13 @@ var server = http.createServer(function (req, res) {
         servicio = new ServicioReporteMaxTime();
         servicio.getResults(writeData(servicio),ano, mes);
     }
+    if (/^\/api\/ReporteUltimaFecha/.test(req.url)) {
+        servicio = new ServicioUltimaFechaReporteXAnalista();
+        servicio.getResults(writeData(servicio),ano, mes);
+    }
     if (/^\/api\/DownloadReport/.test(req.url)) {
         servicio = new ServicioReporteMaxTime();
-        servicio.getResults(downloadReport(servicio),ano, mes);
+        servicio.getResults(downloadReport(servicio));
     }
 
     function writeData(servicio){

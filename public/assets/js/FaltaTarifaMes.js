@@ -92,7 +92,7 @@
             'options': {
                 title: title,
                 vAxis: {title: vAxisTitle, minValue: 0, format: format},
-                hAxis: {title: hAxisTitle, format: format},
+                hAxis: {title: hAxisTitle, minValue: 0, format: format},
                 height: height,
                 colors: colors,
                 orientation: orientation

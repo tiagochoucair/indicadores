@@ -33,7 +33,8 @@ var ServicioReporteMaxTime = function(){
         {label:'TipoHora', type:'string', format: null},
         {label:'ValorHora', type:'number', format: "currency"},
         {label:'Horas', type:'number', format: null},
-        {label:'Comentario', type:'string', format: null}
+        {label:'Comentario', type:'string', format: null},
+        {label:'ValorTotal', type:'number', format: "currency"}
 
     ];
 };

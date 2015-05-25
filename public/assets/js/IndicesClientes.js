@@ -103,7 +103,7 @@
             'options': {
                 title: title,
                 vAxis: {title: vAxisTitle, minValue: 0, format: format},
-                hAxis: {title: hAxisTitle, format: format},
+                hAxis: {title: hAxisTitle, minValue: 0, format: format},
                 height: height,
                 colors: colors,
                 orientation: orientation
@@ -118,8 +118,8 @@
      * Filtros
      */
 
-    var filtroServicio = filters("CategoryFilter","filtroServicio_div","Servicio",false,true,"Todos","Seleccione El Servicio");
-    var filtroCliente = filters("CategoryFilter","filtroCliente_div","Cliente",false,true,"Todos","Seleccione el Cliente");
+    var filtroServicio = filters("CategoryFilter","filtroServicio_div","Servicio",false,true,"Todos","Servicio");
+    var filtroCliente = filters("CategoryFilter","filtroCliente_div","Cliente",false,true,"Todos","Cliente");
 
     /**
      *

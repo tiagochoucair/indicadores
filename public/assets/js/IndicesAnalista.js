@@ -14,55 +14,55 @@ function draw(jsonData) {
     var chartCiudadIndices = charts("BarChart","chart1_div",
         "Indices IF / IOP POR CIUDAD",
         "Porcentage","Ciudad","#,###%",400,"horizontal");
-    addDynamicDivs("charts","col-sm-4","chart1_div" );
+    addDynamicDivs("charts","col-sm-6","chart1_div" );
     var chartCargoIndices  = charts("BarChart","chart2_div",
         "Indices IF / IOP POR CARGO",
         "Porcentage","Cargo","#,###%",400,"horizontal");
-    addDynamicDivs("charts","col-sm-4","chart2_div" );
+    addDynamicDivs("charts","col-sm-6","chart2_div" );
     var chartAnalistaIndices  = charts("BarChart","chart3_div",
         "Indices IF / IOP POR Analista",
-        "Analista","Porcentage","#,###%",400,"vertical");
-    addDynamicDivs("charts","col-sm-4","chart3_div" );
+        "Analista","Porcentage","#,###%",800,"vertical");
+    addDynamicDivs("charts","col-sm-12","chart3_div" );
 
     var chartCiudadSUMIngresos  = charts("BarChart","chart4_div",
         "Suma Ingresos/No Ingresos Por Ciudad",
         "Cantidad","Ciudad","$#,###.###",400,"horizontal",["#5e8043","#F15854"]);
-    addDynamicDivs("charts","col-sm-4","chart4_div" );
+    addDynamicDivs("charts","col-sm-6","chart4_div" );
     var chartCargoSUMIngresos  = charts("BarChart","chart5_div",
         "Suma Ingresos/No Ingresos Por Cargo",
         "Cantidad","Cargo","$#,###.###",400,"horizontal",["#5e8043","#F15854"]);
-    addDynamicDivs("charts","col-sm-4","chart5_div");
+    addDynamicDivs("charts","col-sm-6","chart5_div");
     var chartAnalistaSUMIngresos  = charts("BarChart","chart6_div",
         "Suma Ingresos/No Ingresos Por Analista",
-        "Analista","Cantidad","$#,###.###",400,"vertical",["#5e8043","#F15854"]);
-    addDynamicDivs("charts","col-sm-4","chart6_div" );
+        "Analista","Cantidad","$#,###.###",800,"vertical",["#5e8043","#F15854"]);
+    addDynamicDivs("charts","col-sm-12","chart6_div" );
     var chartCiudadSumHoras  = charts("BarChart","chart7_div",
         "Suma Horas Laborales/Facturables/No Facturables Por Ciudad",
         "Cantidad","Ciudad","decimal",400,"horizontal",["#5DA5DA","#60BD68","#FAA43A"]);
-    addDynamicDivs("charts","col-sm-4","chart7_div" );
+    addDynamicDivs("charts","col-sm-6","chart7_div" );
     var chartCargoSumHoras  = charts("BarChart","chart8_div",
         "Suma Horas Laborales/Facturables/No Facturables Por Cargo",
         "Cantidad","Cargo","decimal",400,"horizontal",["#5DA5DA","#60BD68","#FAA43A"]);
-    addDynamicDivs("charts","col-sm-4","chart8_div" );
+    addDynamicDivs("charts","col-sm-6","chart8_div" );
     var chartAnalistaSumHoras  = charts("BarChart","chart9_div",
         "Suma Horas Laborales/Facturables/No Facturables Por Analista",
-        "Analista","Cantidad","decimal",400,"vertical",["#5DA5DA","#60BD68","#FAA43A"]);
-    addDynamicDivs("charts","col-sm-4","chart9_div" );
+        "Analista","Cantidad","decimal",800,"vertical",["#5DA5DA","#60BD68","#FAA43A"]);
+    addDynamicDivs("charts","col-sm-12","chart9_div" );
     var chartCiudadCampos  = charts("BarChart","chart10_div",
         "Suma Incap/Vac/Comp/Preventa/Induccion/Informacion/Error/ProyectoChoucair/HANF/HAF/HASC",
         "Cantidad","Ciudad","decimal",400,"horizontal",["#FEA895","#46C09D","#CFC2FE","#ADB97F","#BAFFAB","#535E80","#CCCC99",
             "#888888","#A0805A","#D9C039","#F17CB0"]);
-    addDynamicDivs("charts","col-sm-4","chart10_div" );
+    addDynamicDivs("charts","col-sm-6","chart10_div" );
     var chartCargosCampos  = charts("BarChart","chart11_div",
         "Suma Incap/Vac/Comp/Preventa/Induccion/Informacion/Error/ProyectoChoucair/HANF/HAF/HASC",
         "Cantidad","Cargo","decimal",400,"horizontal",["#FEA895","#46C09D","#CFC2FE","#ADB97F","#BAFFAB","#535E80","#CCCC99",
             "#888888","#A0805A","#D9C039","#F17CB0"]);
-    addDynamicDivs("charts","col-sm-4","chart11_div" );
+    addDynamicDivs("charts","col-sm-6","chart11_div" );
     var chartAnalistaCampos  = charts("BarChart","chart12_div",
         "Suma Incap/Vac/Comp/Preventa/Induccion/Informacion/Error/ProyectoChoucair/HANF/HAF/HASC",
-        "Analista","Cantidad","decimal",400,"vertical",["#FEA895","#46C09D","#CFC2FE","#ADB97F","#BAFFAB","#535E80","#CCCC99",
+        "Analista","Cantidad","decimal",800,"vertical",["#FEA895","#46C09D","#CFC2FE","#ADB97F","#BAFFAB","#535E80","#CCCC99",
             "#888888","#A0805A","#D9C039","#F17CB0"]);
-    addDynamicDivs("charts","col-sm-4","chart12_div" );
+    addDynamicDivs("charts","col-sm-12","chart12_div" );
 
 
     /**
@@ -101,7 +101,7 @@ function draw(jsonData) {
             'options': {
                 title: title,
                 vAxis: {title: vAxisTitle, minValue: 0, format: format},
-                hAxis: {title: hAxisTitle, minValue: 0,format: format},
+                hAxis: {title: hAxisTitle, minValue: 0, format: format},
                 height: height,
                 colors: colors,
                 orientation: orientation
@@ -149,13 +149,14 @@ function draw(jsonData) {
             'containerId': containerId,
             'options': {
                 'filterColumnLabel': columnLabel,
-                'ui': {'labelStacking': 'horizontal',
+                'ui': {'labelStacking': 'vertical',
                     'allowNone': allowNone,
                     'allowTyping': allowTyping,
                     'allowMultiple': allowMultiple,
                     'caption': caption,
                     'label': label},
-                'values': values
+            'values': values,
+            'min-width': 'auto'
             }
         });
 
